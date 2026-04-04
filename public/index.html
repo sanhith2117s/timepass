@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Camera Viewer</title>
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      margin-top: 50px;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+    }
+    img {
+      margin-top: 20px;
+      max-width: 80%;
+      border: 2px solid #333;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Camera Viewer</h2>
+
+  <input id="camId" placeholder="Enter Camera ID (e.g. 16)" />
+  <button onclick="loadImage()">Load</button>
+
+  <br>
+
+  <img id="camImg" src="" alt="Camera will appear here" />
+
+  <script>
+    let interval = null;
+
+    function loadImage() {
+      const id = document.getElementById("camId").value.trim();
+      const img = document.getElementById("camImg");
+
+      if (!id) {
+        alert("Enter a valid ID");
+        return;
+      }
+
+      if (interval) clearInterval(interval);
+
+      function updateImage() {
+        img.src = `/camera/${id}?t=${Date.now()}`;
+      }
+
+      updateImage();
+
+      interval = setInterval(updateImage, 2000);
+    }
+  </script>
+
+</body>
+</html>
